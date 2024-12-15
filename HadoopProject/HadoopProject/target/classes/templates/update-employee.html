@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Update Employee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+</head>
+<body>
+<div class="container my-5">
+    <h3> Update Employee</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form action="#" th:action="@{/employee/update/{id}(id=${updatedEmployee.empNo})}" enctype="multipart/form-data"
+                      th:object="${updatedEmployee}" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="empName" class="col-form-label">Employee Name</label> <input
+                                type="text" th:field="*{empName}" class="form-control" id="empName"
+                                placeholder="Name"> <span
+                                th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"
+                                class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="job" class="col-form-label">Job</label> <input
+                                type="text" th:field="*{job}" class="form-control" id="job"
+                        > <span
+                                th:if="${#fields.hasErrors('job')}" th:errors="*{job}"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="mgr" class="col-form-label">MGR</label> <input
+                                type="number" th:field="*{mgr}" class="form-control"
+                                id="mgr" > <span
+                                th:if="${#fields.hasErrors('mgr')}" th:errors="*{mgr}"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="hireDate" class="col-form-label">Hire Date</label> <input
+                                type="date" th:field="*{hireDate}" class="form-control"
+                                id="hireDate" > <span
+                                th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="salary" class="col-form-label">Salary</label> <input
+                                type="number" th:field="*{salary}" class="form-control"
+                                id="salary" > <span
+                                th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <select th:field="*{department}" id="department">
+                                <option value=""> -- </option>
+                                <option th:each="edepartment : ${departments}"
+                                        th:value="${edepartment.getDeptNo()}"
+                                        th:text="${edepartment.getDeptName()}"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="comm" class="col-form-label">Comm</label> <input
+                                type="number" th:field="*{comm}" class="form-control"
+                                id="comm" > <span
+                                th:if="${#fields.hasErrors('comm')}" th:errors="*{comm}"
+                                class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="image" class="col-form-label">Image</label>
+                            <div>
+                                <!-- Eğer mevcut bir resim varsa, onu göster -->
+                                <img th:if="${updatedEmployee.img != null}"
+                                     th:src="@{'http://localhost:9870/webhdfs/v1/images/' + ${updatedEmployee.img} + '?op=OPEN'}"
+                                     alt="Current Image"
+                                     class="img-thumbnail"
+                                     style="width: 100px;" />
+                                <!-- Eğer resim seçilmemişse, sadece input göster -->
+                                <input type="file" name="file" class="form-control" id="image">
+                                <span th:if="${#fields.hasErrors('img')}" th:errors="*{img}" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value="Update Employee">
+                        </div>
+
+                        <div class="form-group col-md-8"></div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <p class="my-5">
+        <a href="/employee/index" class="btn btn-primary"><i
+        > Back To Employee List</i></a>
+    </p>
+</div>
+</body>
+</html>
